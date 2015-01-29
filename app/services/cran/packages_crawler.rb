@@ -5,7 +5,7 @@ module Cran
     end
 
     def fetch!
-      packages.each do |package|
+      packages[0...50].each do |package|
         PackageCreator.create!(package)
       end
     end
