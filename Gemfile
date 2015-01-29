@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'rest-client'
 gem 'treetop-dcf', require: 'dcf'
 gem 'minitar', require: 'archive/tar/minitar'
+gem 'whenever', require: false
 
 group :development, :test do
   gem 'rspec-rails'
