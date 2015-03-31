@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150129221356) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "authors", force: :cascade do |t|
     t.integer  "package_version_id"
     t.string   "name"
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 20150129221356) do
     t.datetime "updated_at",         null: false
   end
 
-  add_index "authors", ["package_version_id"], name: "index_authors_on_package_version_id"
+  add_index "authors", ["package_version_id"], name: "index_authors_on_package_version_id", using: :btree
 
   create_table "maintainers", force: :cascade do |t|
     t.integer  "package_version_id"
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 20150129221356) do
     t.datetime "updated_at",         null: false
   end
 
-  add_index "maintainers", ["package_version_id"], name: "index_maintainers_on_package_version_id"
+  add_index "maintainers", ["package_version_id"], name: "index_maintainers_on_package_version_id", using: :btree
 
   create_table "package_versions", force: :cascade do |t|
     t.integer  "package_id"
@@ -43,7 +46,7 @@ ActiveRecord::Schema.define(version: 20150129221356) do
     t.datetime "updated_at",       null: false
   end
 
-  add_index "package_versions", ["package_id"], name: "index_package_versions_on_package_id"
+  add_index "package_versions", ["package_id"], name: "index_package_versions_on_package_id", using: :btree
 
   create_table "packages", force: :cascade do |t|
     t.string   "name"
@@ -51,6 +54,9 @@ ActiveRecord::Schema.define(version: 20150129221356) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "packages", ["name"], name: "index_packages_on_name"
+  add_index "packages", ["name"], name: "index_packages_on_name", using: :btree
 
+  add_foreign_key "authors", "package_versions"
+  add_foreign_key "maintainers", "package_versions"
+  add_foreign_key "package_versions", "packages"
 end

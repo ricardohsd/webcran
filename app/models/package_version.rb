@@ -17,7 +17,6 @@ class PackageVersion < ActiveRecord::Base
     condition = Author.arel_table[:name].matches("%#{text}%").or(condition)
     condition = Maintainer.arel_table[:name].matches("%#{text}%").or(condition)
 
-
     joins(:package).
     joins(%Q(
       LEFT OUTER JOIN authors ON authors.package_version_id = package_versions.id

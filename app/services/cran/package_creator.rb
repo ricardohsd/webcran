@@ -9,6 +9,8 @@ module Cran
     end
 
     def create!
+      puts "===> Creating package #{@package["Package"]}, Thread #{Thread.current[:name]}"
+
       package = Package.find_or_create_by(name: @package["Package"])
 
       package.add_version!(

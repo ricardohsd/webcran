@@ -1,9 +1,9 @@
 module Cran
   class PackagesUrl
-    URL = "http://cran.r-project.org/src/contrib"
+    URL = "cran.r-project.org"
 
     def self.packages
-      "#{URL}/PACKAGES.gz"
+      [URL, "/src/contrib/PACKAGES.gz"]
     end
 
     def self.for(name, version)
@@ -16,7 +16,7 @@ module Cran
     end
 
     def url
-      "#{URL}/#{@name}_#{@version}.tar.gz"
+      [URL, "/src/contrib/#{@name}_#{@version}.tar.gz"]
     end
   end
 end

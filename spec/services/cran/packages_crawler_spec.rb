@@ -11,7 +11,7 @@ describe Cran::PackagesCrawler do
       expect(Cran::PackageCreator).to receive(:create!).with(package1)
       expect(Cran::PackageCreator).to receive(:create!).with(package2)
 
-      Cran::PackagesCrawler.fetch!
+      Cran::PackagesCrawler.fetch!(jobs: 2)
     end
   end
 end

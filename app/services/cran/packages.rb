@@ -5,8 +5,6 @@ module Cran
     end
 
     def read
-      Rails.logger.info "--- Parsing packages"
-
       Dcf.parse content
     end
 
@@ -20,7 +18,7 @@ module Cran
     end
 
     def zipped_content
-      RestClient.get PackagesUrl.packages
+      Net::HTTP.get *PackagesUrl.packages
     end
   end
 end

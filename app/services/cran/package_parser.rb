@@ -34,7 +34,7 @@ module Cran
     end
 
     def zipped_content
-      RestClient.get PackagesUrl.for(@name, @version)
+      Net::HTTP.get *PackagesUrl.for(@name, @version)
     end
   end
 end
