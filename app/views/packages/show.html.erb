@@ -1,0 +1,31 @@
+<h1><%= link_to 'R packages', root_path %></h1>
+
+<div id="container">
+  <%= render 'search' %>
+
+  <h2><%= @package.name %></h2>
+
+  <ul>
+    <% @versions.each do |version| %>
+      <li>
+        <h3>
+          <%= version.title %>
+          <span class="version">version <%= version.version %></span>
+        </h3>
+
+        <p class="infos">
+          Publication date: <%= I18n.l(version.publication_date) if version.publication_date %><br/>
+          Dependencies: <% version.dependencies.each do |dependency| %>
+            <%= link_to dependency, dependency_route(dependency) %>
+          <% end %><br/>
+          Authors: <%= version.authors.to_sentence %><br/>
+          Maintainers: <%= version.maintainers.to_sentence %>
+        </p>
+
+        <p>
+          <%= version.description %>
+        </p>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -4,8 +4,14 @@ class Package < ActiveRecord::Base
   validates :name, presence: true
 
   def add_version!(attributes)
-    return if versions.exists?(version: attributes["version"])
+    if version = versions.find_by(version: attributes[:version])
+      version
+    else
+      versions.create!(attributes)
+    end
+  end
 
-    versions.create!(attributes)
+  def dependencies
+    versions.last.try :dependencies
   end
 end

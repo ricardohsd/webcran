@@ -1,0 +1,13 @@
+r_dependency:
+  package_version: redis_2_4_1
+  name: "R"
+  version: ">= 2.14"
+
+methods_dependency:
+  package_version: redis_2_4_1
+  name: "methods"
+
+a3_dependency:
+  package_version: redis_2_4_1
+  name: "A3"
+  dependent_package: a3

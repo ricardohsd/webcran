@@ -19,7 +19,8 @@ module Cran
         publication_date: @package["Date/Publication"],
         version: @package["Version"],
         authors: authors,
-        maintainers: authors(Maintainer)
+        maintainers: authors(Maintainer),
+        dependencies: dependencies
       )
     end
 
@@ -33,6 +34,16 @@ module Cran
           klass.new(name: name.strip, email: email.try(:strip))
         end
       end.compact
+    end
+
+    def dependencies
+      @package["Depends"].to_s.split(/,/).map do |dependency|
+        name, version = dependency.strip.match(/(\w+)?(.*)/).captures
+        Dependency.new(
+          name: name,
+          version: version.to_s.gsub(/\(|\)/, '').strip
+        )
+      end
     end
   end
 end

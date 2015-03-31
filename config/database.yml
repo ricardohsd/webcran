@@ -1,0 +1,19 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: webcran_development
+  pool: 5
+  min_messages: warning
+  username: ricardohsd
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: webcran_test
+  pool: 5
+  min_messages: warning
+  username: ricardohsd
+  password:

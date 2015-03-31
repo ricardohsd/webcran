@@ -1,4 +1,5 @@
 require 'thread'
+require_relative '../../models/dependency.rb'
 require_relative '../../models/author.rb'
 require_relative '../../models/maintainer.rb'
 require_relative '../../models/package_version.rb'

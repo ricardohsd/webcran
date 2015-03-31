@@ -1,9 +1,13 @@
 class PackagesController < ApplicationController
-  def index
-    @packages = PackageVersion.includes(:package).ordered
+  has_scope :search
+  has_scope :dependent_package_name
 
-    if params[:search]
-      @packages = @packages.search(params[:search])
-    end
+  def index
+    @packages = apply_scopes(PackageVersion).includes(:package).uniq.ordered
+  end
+
+  def show
+    @package = Package.find(params[:id])
+    @versions = @package.versions
   end
 end

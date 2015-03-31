@@ -3,6 +3,7 @@ class PackageVersion < ActiveRecord::Base
 
   has_many :authors, dependent: :destroy
   has_many :maintainers, dependent: :destroy
+  has_many :dependencies, dependent: :destroy
 
   validates :package, :version, :title, :description, presence: true
 
@@ -23,5 +24,9 @@ class PackageVersion < ActiveRecord::Base
       LEFT OUTER JOIN maintainers ON maintainers.package_version_id = package_versions.id
     )).
     where(condition).uniq
+  }
+
+  scope :dependent_package_name, -> (name) {
+    joins(:package).where(Package.arel_table[:name].eq(name))
   }
 end

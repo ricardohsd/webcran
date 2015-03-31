@@ -1,31 +1,37 @@
 <h1><%= link_to 'R packages', root_path %></h1>
 
 <div id="container">
-  <%= form_tag root_path, method: "get" do %>
-    <%= text_field_tag :search, params[:search] %>
-    <%= button_tag "Search" %>
+  <%= render 'search' %>
+
+  <% if @packages.exists? %>
+    <ul>
+      <% @packages.each do |package| %>
+        <li>
+          <h2><%= package.name %></h2>
+
+          <h3>
+            <%= package.title %>
+            <span class="version">version <%= package.version %></span>
+          </h3>
+
+          <p class="infos">
+            Publication date: <%= I18n.l(package.publication_date) if package.publication_date %><br/>
+            Dependencies: <% package.dependencies.each do |dependency| %>
+              <%= link_to dependency, dependency_route(dependency) %>
+            <% end %><br/>
+            Authors: <%= package.authors.to_sentence %><br/>
+            Maintainers: <%= package.maintainers.to_sentence %>
+          </p>
+
+          <p>
+            <%= package.description %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="alert">
+      Couldn't find the package '<%= params[:dependent_package_name] %>'.
+    </div>
   <% end %>
-
-  <ul>
-    <% @packages.each do |package| %>
-      <li>
-        <h2><%= package.name %></h2>
-
-        <h3>
-          <%= package.title %>
-          <span class="version">version <%= package.version %></span>
-        </h3>
-
-        <p class="infos">
-          Publication date: <%= I18n.l(package.publication_date) if package.publication_date %><br/>
-          Authors: <%= package.authors.to_sentence %><br/>
-          Maintainers: <%= package.maintainers.to_sentence %>
-        </p>
-
-        <p>
-          <%= package.description %>
-        </p>
-      </li>
-    <% end %>
-  </ul>
 </div>

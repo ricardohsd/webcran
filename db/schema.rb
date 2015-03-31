@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150129221356) do
+ActiveRecord::Schema.define(version: 20150331131903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 20150129221356) do
   end
 
   add_index "authors", ["package_version_id"], name: "index_authors_on_package_version_id", using: :btree
+
+  create_table "dependencies", force: :cascade do |t|
+    t.integer  "package_version_id",   null: false
+    t.string   "name",                 null: false
+    t.string   "version"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "dependent_package_id"
+  end
+
+  add_index "dependencies", ["dependent_package_id"], name: "index_dependencies_on_dependent_package_id", using: :btree
+  add_index "dependencies", ["package_version_id"], name: "index_dependencies_on_package_version_id", using: :btree
 
   create_table "maintainers", force: :cascade do |t|
     t.integer  "package_version_id"
@@ -57,6 +69,8 @@ ActiveRecord::Schema.define(version: 20150129221356) do
   add_index "packages", ["name"], name: "index_packages_on_name", using: :btree
 
   add_foreign_key "authors", "package_versions"
+  add_foreign_key "dependencies", "package_versions"
+  add_foreign_key "dependencies", "packages", column: "dependent_package_id"
   add_foreign_key "maintainers", "package_versions"
   add_foreign_key "package_versions", "packages"
 end
